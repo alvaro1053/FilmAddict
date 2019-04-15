@@ -42,8 +42,9 @@ namespace FilmAddict.Models
         public String [] Genres { get; set; }
 
         [BsonElement("Critics")]
-        public Critics [] critics{ get; set; }
+        public IList <Critics> critics{ get; set; }
 
+   
     }
 
     public class Critics

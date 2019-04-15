@@ -1,13 +1,14 @@
 ﻿@model FilmAddict.Models.FilmModel
 
 @{
-    ViewBag.Title = "Display";
+    var comments = ViewBag.Comments;
 }
-
-<h2>Display</h2>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 <div>
-    <h4>FilmModel</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -53,11 +54,14 @@
         <dt>
             @Html.DisplayNameFor(model => model.Trailer)
         </dt>
-
+        <br />
         <dd>
-            @Html.DisplayFor(model => model.Trailer)
-        </dd>
 
+            <iframe style="border:2px solid red;" width="560" height="315" src="@Html.DisplayFor(model => model.Trailer)"
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        </dd>
+        <br/>
         <dt>
             @Html.DisplayNameFor(model => model.Synopsis)
         </dt>
@@ -65,18 +69,46 @@
         <dd>
             @Html.DisplayFor(model => model.Synopsis)
         </dd>
+
         <dt>
-            @Html.DisplayNameFor(model => model.critics)
+            @Html.DisplayNameFor(model => model.Genres)
         </dt>
-        @foreach (var item in Model.critics)
+
+        <dd>
+            @foreach (var item in Model.Genres)
+            {
+                <span class="badge badge-danger">@item</span>
+            }
+        </dd>
+        <br />
+        @foreach (var item in comments)
         {
-            <dd>
-                @Html.DisplayFor(model => model.critics[0])
-            </dd>
+        
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>@item.Name</strong>
+                    </div>
+                    <div class="panel-body">
+                        @item.Comment
+                    </div>
+                </div>
+            </div>
+        
+
         }
+
+
     </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+
+
+
+    </div>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
