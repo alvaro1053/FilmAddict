@@ -107,7 +107,7 @@ namespace FilmAddict.Controllers
                 var update = Builders<FilmModel>.Update.Set("title",film.Title).Set("year",film.Year)
                     .Set("duration",film.Duration).Set("country",film.Country)
                     .Set("director",film.Director).Set("trailer",film.Trailer)
-                    .Set("synopsis",film.Synopsis).Set("genres",film.Genres).Set("Critics",film.critics);
+                    .Set("synopsis",film.Synopsis).Set("genres",film.Genres);
 
                 var result = filmCollection.UpdateOne(filter,update);
                 return RedirectToAction("Index");

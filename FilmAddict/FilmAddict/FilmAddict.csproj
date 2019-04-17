@@ -195,6 +195,9 @@
     <Content Include="Views\Film\Display.cshtml" />
     <Content Include="Views\Film\Create.cshtml" />
     <Content Include="Views\Film\Edit.cshtml" />
+    <Content Include="Views\Film\AddComment.cshtml" />
+    <Content Include="Views\Film\AddCommentPartial.cshtml" />
+    <Content Include="Views\Film\DisplayPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

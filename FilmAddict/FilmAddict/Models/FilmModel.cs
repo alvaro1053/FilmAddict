@@ -59,4 +59,8 @@ namespace FilmAddict.Models
         public String Comment { get; set; }
 
     }
+
+    //Clase auxiliar que encapsule los dos modelos para poder trabajar con ellos en la misma vista
+
+
 }

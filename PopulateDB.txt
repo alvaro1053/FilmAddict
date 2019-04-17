@@ -1,11 +1,11 @@
 {
-    "_id" : ObjectId("5ca8d5af1225f88b87984b71"),
+    "_id" : ObjectId("5ca8d5af1225f88b87944b71"),
     "title" : "Dumbo",
     "year" : "2019",
     "duration" : "111",
     "country" : "Estados Unidos",
     "director" : "Tim Burton",
-    "trailer" : "https://www.youtube.com/embed/watch?v=7NiYVoqBt-8",
+    "trailer" : "https://www.youtube.com/embed/7NiYVoqBt-8",
     "synopsis" : "Holt Farrier (Colin Farrell) cuenta con la ayuda de sus hijos Milly (Nico Parker) y Joe (Finley Hobbins) para cuidar a un elefante recién nacido cuyas orejas gigantes le hacer ser el hazmerreír en un Circo que no pasa por su mejor momento.",
     "genres" : [ 
         "Aventuras", 
@@ -25,7 +25,7 @@
     "duration" : "76",
     "country" : "España",
     "director" : "Jaume Balagueró",
-    "trailer" : "https://www.youtube.com/embed/watch?v=tqsOaV7NUVM",
+    "trailer" : "https://www.youtube.com/embed/tqsOaV7NUVM",
     "synopsis" : "Cada noche, Ángela (Manuela Velasco), una joven reportera de una televisión local, sigue con su cámara a un grupo profesional distinto. Esta noche le toca entrevistar a los bomberos y tiene la secreta esperanza de poder asistir en directo a un impactante incendio. Pero la noche transcurre tranquilamente.",
     "genres" : [ 
         "Terror", 
@@ -45,7 +45,7 @@
     "duration" : "129",
     "country" : "Estados Unidos",
     "director" : "M. Night Shyamalan",
-    "trailer" : "https://www.youtube.com/embed/watch?v=95ghQs5AmNk",
+    "trailer" : "https://www.youtube.com/embed/95ghQs5AmNk",
     "synopsis" : "Secuela de El protegido y Múltiple.",
     "genres" : [ 
         "Intriga", 
