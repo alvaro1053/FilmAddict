@@ -4,9 +4,7 @@
     ViewBag.Title = "Index";
 }
 <br />
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 
 <table class="table">
     <tr>
@@ -25,9 +23,11 @@
         <th>
             @Html.DisplayNameFor(model => model.Director)
         </th>
+        <!--
         <th>
             @Html.DisplayNameFor(model => model.Trailer)
         </th>
+        -->
         <th>
             @Html.DisplayNameFor(model => model.Synopsis)
         </th>
@@ -55,19 +55,33 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Director)
             </td>
+            <!--
             <td>
                 @Html.DisplayFor(modelItem => item.Trailer)
             </td>
+            -->
             <td>
                 @Html.DisplayFor(modelItem => item.Synopsis)
             </td>
 
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Display", "Display", new { id = item.Id }) |
+                <button class="btn btn-danger">
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                </button>
+                <button class="btn btn-danger">
+                @Html.ActionLink("Display", "Display", new { id = item.Id })
+                </button>
+                <button class="btn btn-danger">
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </button>
             </td>
         </tr>
     }
 
 </table>
+
+<div style="text-align: center;">
+    <button class="btn btn-danger" >
+        @Html.ActionLink("Create New", "Create")
+    </button>
+</div>

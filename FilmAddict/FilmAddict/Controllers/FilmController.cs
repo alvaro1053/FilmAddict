@@ -52,19 +52,23 @@ namespace FilmAddict.Controllers
         [HttpPost]
         public ActionResult Create(FilmModel film) {
 
+            if (ModelState.IsValid)
 
-            try
-            {
-                film.critics = new List<Critics>();
-                filmCollection.InsertOne(film);
+                try
+                {
+                    film.critics = new List<Critics>();
+                    filmCollection.InsertOne(film);
 
-                return RedirectToAction("Index");
-            }
-            catch {
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
 
+                    return View();
+
+                }
+            else
                 return View();
-
-            }
 
 
         }
