@@ -43,13 +43,13 @@ namespace FilmAddict.Models
 
 
         [BsonElement("trailer")]
-        [RegularExpression("^((https?|ftp|smtp):\\/\\/)?(www.)?[a - z0 - 9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$")]
+        [RegularExpression("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")]
         public String Trailer { get; set; }
 
 
         [BsonElement("synopsis")]
         [Required(ErrorMessage = "La synopsis de la película es obligatorio")]
-        [MinLength(10, ErrorMessage = "La synopsis de la película debe tener al menos 1 caracter")]
+        [MinLength(10, ErrorMessage = "La synopsis de la película debe tener al menos 10 caracteres")]
         public String Synopsis { get; set; }
 
 
