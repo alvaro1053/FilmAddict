@@ -37,8 +37,11 @@ namespace FilmAddict.Controllers
             var film = filmCollection.AsQueryable<FilmModel>().SingleOrDefault(x=>x.Id == filmId);
 
             ViewBag.Comments = film.critics;
+            ViewBag.Genres = film.Genres;
+            ViewBag.film = film;
+            var tuple = new Tuple<FilmAddict.Models.FilmModel, FilmAddict.Models.Critics>(film,new Critics());
 
-            return View(film);
+            return View(tuple);
         }
 
         public ActionResult Create() {
@@ -71,26 +74,38 @@ namespace FilmAddict.Controllers
         }
         //Add Comment
         [HttpPost]
-        public ActionResult AddComment(String id, FilmModel film)
-        {//Display film 
+        public ActionResult AddComment(String id)
+        {
+
+            if (ModelState.IsValid)
+                try
+                {
+                    Critics c = new Critics();
+                    c.Name = Request.Form["Item2.Name"];
+                    c.Comment = Request.Form["Item2.Comment"];
+
+                    var filter = Builders<FilmModel>.Filter.Eq("_id", ObjectId.Parse(id));
+                    var filmId = new ObjectId(id);
+                    Models.FilmModel film = filmCollection.AsQueryable<FilmModel>().SingleOrDefault(x => x.Id == filmId);
+                    IList<Critics> l = film.critics;
+                    l.Add(c);
+                    var update = Builders<FilmModel>.Update.Set("Critics", l);
+                    var result = filmCollection.UpdateOne(filter, update);
 
 
-            try
-            {
-                var filter = Builders<FilmModel>.Filter.Eq("_id", ObjectId.Parse(id));
-                var update = Builders<FilmModel>.Update.Set("Critics", film.critics);
-                var result = filmCollection.UpdateOne(filter, update);
 
-     
+                    return RedirectToAction("Display/" + id);
+                }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
+                catch
+                {
 
+                    return RedirectToAction("Index");
+
+                }
+            else
                 return View();
-
-            }
+            
 
 
         }

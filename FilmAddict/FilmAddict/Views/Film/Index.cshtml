@@ -4,9 +4,7 @@
     ViewBag.Title = "Index";
 }
 <br />
-<button>
-    @Html.ActionLink("Create New", "Create")
-</button>
+
 
 <table class="table">
     <tr>
@@ -67,13 +65,13 @@
             </td>
 
             <td>
-                <button>
+                <button class="btn btn-danger">
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                 </button>
-                <button>
+                <button class="btn btn-danger">
                 @Html.ActionLink("Display", "Display", new { id = item.Id })
                 </button>
-                <button>
+                <button class="btn btn-danger">
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </button>
             </td>
@@ -81,3 +79,9 @@
     }
 
 </table>
+
+<div style="text-align: center;">
+    <button class="btn btn-danger" >
+        @Html.ActionLink("Create New", "Create")
+    </button>
+</div>

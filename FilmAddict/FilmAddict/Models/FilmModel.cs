@@ -2,9 +2,10 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
+ 
 
 namespace FilmAddict.Models
 {
@@ -67,15 +68,18 @@ namespace FilmAddict.Models
 
 
         [BsonElement("name")]
+        [Required(ErrorMessage = "The name is required")]
+        [MinLength(1, ErrorMessage = "can not be empty ")]
         public String Name { get; set; }
 
-
+        [Required(ErrorMessage = "The comment is required")]
+        [MinLength(1, ErrorMessage = "can not be empty ")]
         [BsonElement("comment")]
         public String Comment { get; set; }
 
     }
 
-    //Clase auxiliar que encapsule los dos modelos para poder trabajar con ellos en la misma vista
+    
 
 
 }
