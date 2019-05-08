@@ -193,6 +193,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Film\Index.cshtml" />
     <Content Include="Views\Film\Display.cshtml" />
+    <Content Include="Views\Film\Stats.cshtml" />
+    <Content Include="Views\Film\Create.cshtml" />
+    <Content Include="Views\Film\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -250,4 +253,4 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
-</Project> 
+</Project>

@@ -43,6 +43,98 @@ namespace FilmAddict.Controllers
 
             return View(tuple);
         }
+        //Películas más comentadas
+        public ActionResult Stats() {
+
+            List<FilmModel> films = filmCollection.AsQueryable().ToList();
+            List<FilmModel> nombre = new List<FilmModel>();
+            List<int> comentarios = new List<int>();
+            foreach (var a in films) {
+
+                comentarios.Add(a.critics.Count);
+                
+
+            }
+            foreach (var a in films)
+            {
+                if (comentarios.Max()==a.critics.Count) {
+
+                    nombre.Add(a);
+                }
+                
+                
+
+            }//Película con mayor comentarios 
+
+            ViewBag.filmMoreComments = nombre.First();
+            ViewBag.numberComments = comentarios.Max();
+
+            //Pelicula con mayor duración y menor 
+            List<FilmModel> duracionMayor = new List<FilmModel>();
+            List<FilmModel> duracionMenor = new List<FilmModel>();
+            List<int> duraciones = new List<int>();
+            foreach (var a in films)
+            {
+
+                duraciones.Add(a.Duration);
+
+
+            }
+            foreach (var a in films)
+            {
+                if (duraciones.Max() == a.Duration)
+                {
+
+                    duracionMayor.Add(a);
+                }
+
+
+
+            }
+            foreach (var a in films)
+            {
+                if (duraciones.Min() == a.Duration)
+                {
+
+                    duracionMenor.Add(a);
+
+                }
+
+
+
+            }
+
+            ViewBag.filmMoreDuration = duracionMayor.First();
+            ViewBag.bestDuration = duraciones.Max();
+            ViewBag.worstDuration = duraciones.Min();
+            ViewBag.filmLessDuration = duracionMenor.First();
+
+
+
+            List<GenreStats> u = filmCollection.Aggregate().Unwind<FilmModel, FilmModel>
+                (x => x.Genres).Group(x => x.Genres, g => new
+                {
+                    Count = g.Count()
+                }).As<GenreStats>().ToList();
+
+            List<int> datos = new List<int>();
+            foreach (var i in u) {
+                datos.Add(i.Count);
+            }
+            List<string> genres = new List<string>();
+            foreach (var i in u)
+            {
+                genres.Add(i.Genre);
+            }
+            ViewBag.genres = genres;
+            ViewBag.datos = datos;
+            ViewBag.u = u;
+
+            var oldFilm = films.Select(x=>x.Year).Min();
+            ViewBag.oldFilm = oldFilm;
+            return View();
+
+        }
 
         public ActionResult Create() {
             return View();

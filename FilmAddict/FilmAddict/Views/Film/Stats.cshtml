@@ -1,0 +1,89 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+@{
+    /**/
+
+    ViewBag.Title = "Stats";
+}
+
+
+<table class="displayStyle" style="width: 50%">
+    <tr>
+        <th colspan="2">
+            Analysis
+        </th>
+    </tr>
+    <tr>
+        <td>Film more popular:</td>
+        <td style="text-align: right"><a href="Display/@ViewBag.filmMoreComments.Id"> @ViewBag.filmMoreComments.Title  </a>  <span class="badge badge-danger"> @ViewBag.numberComments comments</span></td>
+    </tr>
+    <tr>
+        <td>Longer duration film</td>
+        <td style="text-align: right"><a href="Display/@ViewBag.filmMoreDuration.Id"> @ViewBag.filmMoreDuration.Title </a> <span class="badge badge-danger"> @ViewBag.bestDuration minutes</span> </td>
+    </tr>
+    <tr>
+        <td>Shorter duration film</td>
+        <td style="text-align: right"><a href="Display/@ViewBag.filmLessDuration.Id"> @ViewBag.filmLessDuration.Title </a> <span class="badge badge-danger"> @ViewBag.worstDuration minutes</span> </td>
+    </tr>
+    @*
+        <!--<tr>
+                <td>Oldest film</td>
+                <td style="text-align: right"><a href="Display/@ViewBag.oldFilm.Id"> @ViewBag.oldFilm.Title </a> <span class="badge badge-danger" > @ViewBag.oldFilm.Year year</span> </td>
+            </tr>
+        -->
+    *@
+</table>
+
+
+    <div class="displayStyle" style="width: 50%">
+        <canvas id="myChart" width="50" height="50"></canvas>
+
+
+
+
+    </div>
+    <script>
+        var datos = @Html.Raw(Json.Encode(ViewBag.datos));
+        var genres = @Html.Raw(Json.Encode(ViewBag.genres));
+        var tam = datos.length;
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: genres,
+                    datasets: [{
+                        label: 'Films by genre',
+                        data: datos,
+                        backgroundColor: pushColor(),
+                        borderColor: pushColor(),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+        });
+        function getRandomColor() {
+            var letters = '789ABCD'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.round(Math.random() * 6)];
+            }
+            return color;
+        }
+        function pushColor() {
+            var colors = [];
+            for (var i = 0; i < tam; i++) {
+                colors.push(getRandomColor());
+            }
+            return colors;
+        }
+
+    </script>
+
+

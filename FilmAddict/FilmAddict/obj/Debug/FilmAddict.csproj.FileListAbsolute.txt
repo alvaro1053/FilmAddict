@@ -186,8 +186,8 @@ C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\bin\es\System.We
 C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\bin\es\System.Web.WebPages.resources.dll
 C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\obj\Debug\FilmAddict.csprojAssemblyReference.cache
 C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\obj\Debug\FilmAddict.csproj.CoreCompileInputs.cache
 C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\obj\Debug\FilmAddict.csproj.CopyComplete
 C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\obj\Debug\FilmAddict.dll
 C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\obj\Debug\FilmAddict.pdb
+C:\Users\jesus\Desktop\CBD GIT\FilmAddict\FilmAddict\FilmAddict\obj\Debug\FilmAddict.csprojAssemblyReference.cache
