@@ -16,11 +16,12 @@ namespace FilmAddict.Controllers
     {
         private MongoDBContext dbcontext;
         private IMongoCollection<FilmModel> filmCollection;
-
+        private IMongoCollection<Billboard> billboardCollection;
 
         public FilmController() {
             dbcontext = new MongoDBContext();
             filmCollection = dbcontext.mongoDatabase.GetCollection<FilmModel>("Film");
+            billboardCollection = dbcontext.mongoDatabase.GetCollection<Billboard>("Billboard");
         }
 
         // GET: Film
@@ -132,6 +133,11 @@ namespace FilmAddict.Controllers
 
             var oldFilm = films.Select(x=>x.Year).Min();
             ViewBag.oldFilm = oldFilm;
+
+            var billboardWithMoreFilms = billboardCollection.AsQueryable().ToList().OrderByDescending(x => x.films.Count).Take(3);
+            ViewBag.billboardWithMoreFilms = billboardWithMoreFilms;
+
+
             return View();
 
         }
@@ -149,6 +155,16 @@ namespace FilmAddict.Controllers
                 try
                 {
                     film.critics = new List<Critics>();
+                    List<string> genres = new List<string>();
+                    
+                    foreach (string i in film.Genres[0].Split(','))
+                    {
+                        genres.Add(i);
+
+                    }
+                    film.Genres = genres.ToArray() ;
+                    
+
                     filmCollection.InsertOne(film);
 
                     return RedirectToAction("Index");

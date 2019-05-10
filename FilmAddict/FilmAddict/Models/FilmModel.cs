@@ -85,7 +85,4 @@ namespace FilmAddict.Models
         public int Count { get; set; }
     }
 
-
-
-
 }
