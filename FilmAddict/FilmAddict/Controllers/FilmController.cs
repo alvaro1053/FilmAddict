@@ -149,6 +149,16 @@ namespace FilmAddict.Controllers
                 try
                 {
                     film.critics = new List<Critics>();
+                    List<string> genres = new List<string>();
+                    
+                    foreach (string i in film.Genres[0].Split(','))
+                    {
+                        genres.Add(i);
+
+                    }
+                    film.Genres = genres.ToArray() ;
+                    
+
                     filmCollection.InsertOne(film);
 
                     return RedirectToAction("Index");

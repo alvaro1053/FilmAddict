@@ -147,11 +147,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\MongoDBContext.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BillboardController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Billboard.cs" />
     <Compile Include="Models\FilmModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\UserAccount.cs" />
@@ -200,6 +202,13 @@
     <Content Include="Views\Film\Edit.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Account\LoggedIn.cshtml" />
+    <Content Include="Views\Account\.DS_Store" />
+    <Content Include="Views\Billboard\Index.cshtml" />
+    <Content Include="Views\Billboard\Display.cshtml" />
+    <Content Include="Views\Billboard\Create.cshtml" />
+    <Content Include="Views\Billboard\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
