@@ -2,5 +2,6 @@
 
 @if(Session["UserId"] != null)
 {
-    <h4> Hello @Session["Username"].ToString()</h4>
+    <h4> Welcome: @Session["Username"].ToString()</h4>
+    @Html.ActionLink("Logout","Logout","Account")
 }

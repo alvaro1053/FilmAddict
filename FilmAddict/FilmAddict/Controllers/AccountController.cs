@@ -30,15 +30,38 @@ namespace FilmAddict.Controllers
         [HttpPost]
         public ActionResult Register(UserAccount account)
         {
+
+
             if (ModelState.IsValid)
             {
                 dbcontext = new MongoDBContext();
                 userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+
+                List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
+
+                var check = true;
+                foreach(UserAccount user in users)
+                {
+                    if (user.Username.Equals(account.Username))
+                    {
+                        check = false;
+                        ViewBag.Used = "Username already used.";
+                    }
+                    else
+                    {
+                        check = true;
+                    }
+                }
+                if (check == true)
                 {
                     userCollection.InsertOne(account);
+
+                    ModelState.Clear();
+                    ViewBag.Message = account.Username + " succesfully registered.";
                 }
             }
             return View();
+
         }
 
         public ActionResult Login()
@@ -54,17 +77,21 @@ namespace FilmAddict.Controllers
             userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
 
             List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
-            
-            if (users.Contains(user))
-            {
-                Session["UserID"] = user.UserId.ToString();
-                Session["Username"] = user.Username.ToString();
-                return RedirectToAction("LoggedIn");
 
-            }
-            else
+            foreach (UserAccount u in users)
             {
-                ModelState.AddModelError("", "Username or password is wrong.");
+                if ((user.Username.Equals(u.Username)) && user.Password.Equals(u.Password))
+                {
+                    Session["UserID"] = user.UserId.ToString();
+                    Session["Username"] = user.Username.ToString();
+                    return RedirectToAction("LoggedIn");
+                }
+                else
+                {
+                    //ModelState.AddModelError("", "Username or password is wrong.");
+                    ViewBag.Fail = "Username or password is wrong.";
+                }
+
             }
             return View();
         }
@@ -79,5 +106,61 @@ namespace FilmAddict.Controllers
                 return RedirectToAction("Login");
             }
         }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            ViewBag.session = Session["Username"];
+            return RedirectToAction("LoggedIn");
+        }
+
+        /*       
+        public JsonResult checkUsernameAvailability(string UserName)
+        {
+            dbcontext = new MongoDBContext();
+            userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+
+            List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
+
+            var searchData = users.Where(u => u.Username == UserName).SingleOrDefault();
+
+            if(searchData != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
+
+
+
+            
+            dbcontext = new MongoDBContext();
+            userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+
+            List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
+
+            bool existsUser = users.Where(u => u.Username.ToLowerInvariant().Equals(UserName.ToLower())) != null;
+
+            return Json(!existsUser, JsonRequestBehavior.AllowGet);
+
+            string y = null;
+            var user = y;
+
+            foreach (UserAccount u in users)
+            {
+                if (!(u.Username.Equals(UserName)))
+                { 
+                    user = UserName;
+                }
+            }
+
+            return Json(user == null);
+
+
+        }
+        */
+
     }
 }
