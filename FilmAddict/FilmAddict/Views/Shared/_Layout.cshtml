@@ -25,6 +25,11 @@
                     <li>@Html.ActionLink("Stats", "Index", "Film/Stats")</li>
                     <li>@Html.ActionLink("Billboards", "Index", "Billboard")</li>
 
+                    @if (Session["UserId"] != null)
+                    {
+                        <li>@Html.ActionLink("My Films", "MyFilms", "Film/MyFilms")</li>
+                    }
+
                     @if (Session["UserId"] == null){
                     <li>@Html.ActionLink("Log in", "Index", "Account/Login")</li>
                     <li>@Html.ActionLink("Register", "Index", "Account/Register")</li>

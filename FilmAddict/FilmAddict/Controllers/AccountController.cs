@@ -16,7 +16,7 @@ namespace FilmAddict.Controllers
     {
         private MongoDBContext dbcontext;
         private IMongoCollection<UserAccount> userCollection;
-
+        
         public ActionResult Index()
         {
             return View();
@@ -39,6 +39,9 @@ namespace FilmAddict.Controllers
 
                 List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
 
+               var films = new List<FilmModel>();
+
+
                 var check = true;
                 foreach(UserAccount user in users)
                 {
@@ -50,6 +53,7 @@ namespace FilmAddict.Controllers
                     else
                     {
                         check = true;
+                        account.Films = films;
                     }
                 }
                 if (check == true)

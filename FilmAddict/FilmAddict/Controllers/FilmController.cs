@@ -18,6 +18,8 @@ namespace FilmAddict.Controllers
         private IMongoCollection<FilmModel> filmCollection;
         private IMongoCollection<Billboard> billboardCollection;
 
+        private IMongoCollection<UserAccount> userCollection;
+
         public FilmController() {
             dbcontext = new MongoDBContext();
             filmCollection = dbcontext.mongoDatabase.GetCollection<FilmModel>("Film");
@@ -28,6 +30,27 @@ namespace FilmAddict.Controllers
         public ActionResult Index()
         {
             List<FilmModel> films = filmCollection.AsQueryable<FilmModel>().ToList();
+
+            return View(films);
+        }
+
+        // My films
+        public ActionResult MyFilms()
+        {
+            IList<FilmModel> films = new List<FilmModel>();
+
+            if (Session["Username"] != null)
+            {
+                userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+                List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
+                foreach(UserAccount u in users)
+                {
+                    if (u.Username.Equals(Session["Username"].ToString()))
+                    {
+                        films = u.Films;
+                    }
+                }
+            }
 
             return View(films);
         }
@@ -165,13 +188,36 @@ namespace FilmAddict.Controllers
                     film.Genres = genres.ToArray() ;
                     
 
+
+                    if (Session["Username"] != null)
+                    {
+                        userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+                        List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
+                        foreach (UserAccount u in users)
+                        {
+                            if (u.Username.Equals(Session["Username"].ToString()))
+                            {
+
+                                u.Films.Add(film);
+
+                                var id = u.UserId.ToString();
+
+                                var filter = Builders<UserAccount>.Filter.Eq("_id", ObjectId.Parse(id));
+                                var update = Builders<UserAccount>.Update.Set("films", u.Films);
+
+                                var result = userCollection.UpdateOne(filter, update);
+
+                            }
+                        }
+                    }
+
                     filmCollection.InsertOne(film);
 
                     return RedirectToAction("Index");
                 }
-                catch
+                catch (Exception e)
                 {
-
+                    var error = e.GetBaseException();
                     return View();
 
                 }

@@ -32,6 +32,8 @@ namespace FilmAddict.Models
         [Compare("Password",ErrorMessage ="Confirm password and password do not match!")]
         public string ConfirmPassword { get; set; }
 
+        [BsonElement("films")]
+        public List <FilmModel> Films { get; set; }
 
     }
 }

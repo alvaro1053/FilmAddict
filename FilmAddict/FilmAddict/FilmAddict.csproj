@@ -209,6 +209,7 @@
     <Content Include="Views\Billboard\Display.cshtml" />
     <Content Include="Views\Billboard\Create.cshtml" />
     <Content Include="Views\Billboard\Edit.cshtml" />
+    <Content Include="Views\Film\MyFilms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
