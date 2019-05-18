@@ -30,7 +30,7 @@ namespace FilmAddict.Controllers
         public ActionResult Index()
         {
             List<FilmModel> films = filmCollection.AsQueryable<FilmModel>().ToList();
-
+            ViewBag.logueado = Session["Username"];
             return View(films);
         }
 
@@ -38,7 +38,7 @@ namespace FilmAddict.Controllers
         public ActionResult MyFilms()
         {
             IList<FilmModel> films = new List<FilmModel>();
-
+            ViewBag.logueado = Session["Username"];
             if (Session["Username"] != null)
             {
                 userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
@@ -59,7 +59,7 @@ namespace FilmAddict.Controllers
         public ActionResult Display(String id) {
             var filmId = new ObjectId(id);
             var film = filmCollection.AsQueryable<FilmModel>().SingleOrDefault(x=>x.Id == filmId);
-
+            ViewBag.logueado = Session["Username"];
             ViewBag.Comments = film.critics;
             ViewBag.Genres = film.Genres;
             ViewBag.film = film;
@@ -89,9 +89,12 @@ namespace FilmAddict.Controllers
                 
 
             }//Película con mayor comentarios 
-
-            ViewBag.filmMoreComments = nombre.First();
+            if (nombre.Count!=0) {
+                ViewBag.filmMoreComments = nombre.First();
+            }
+            if (comentarios.Count!=0) { 
             ViewBag.numberComments = comentarios.Max();
+            }
 
             //Pelicula con mayor duración y menor 
             List<FilmModel> duracionMayor = new List<FilmModel>();
@@ -127,11 +130,14 @@ namespace FilmAddict.Controllers
 
 
             }
+            if (duracionMayor.Count!=0) {
 
-            ViewBag.filmMoreDuration = duracionMayor.First();
-            ViewBag.bestDuration = duraciones.Max();
-            ViewBag.worstDuration = duraciones.Min();
-            ViewBag.filmLessDuration = duracionMenor.First();
+                ViewBag.filmMoreDuration = duracionMayor.First();
+                ViewBag.bestDuration = duraciones.Max();
+                ViewBag.worstDuration = duraciones.Min();
+                ViewBag.filmLessDuration = duracionMenor.First();
+            }
+            
 
 
 
@@ -153,10 +159,12 @@ namespace FilmAddict.Controllers
             ViewBag.genres = genres;
             ViewBag.datos = datos;
             ViewBag.u = u;
+            if (films.Count!=0) {
 
-            var oldFilm = films.Select(x=>x.Year).Min();
-            ViewBag.oldFilm = oldFilm;
 
+                var oldFilm = films.Select(x => x.Year).Min();
+                ViewBag.oldFilm = oldFilm;
+            }
             var billboardWithMoreFilms = billboardCollection.AsQueryable().ToList().OrderByDescending(x => x.films.Count).Take(3);
             ViewBag.billboardWithMoreFilms = billboardWithMoreFilms;
 
@@ -166,62 +174,66 @@ namespace FilmAddict.Controllers
         }
 
         public ActionResult Create() {
+            ViewBag.logueado = Session["Username"];
             return View();
         }
 
         //POST
         [HttpPost]
         public ActionResult Create(FilmModel film) {
+            if (Session["Username"] != null)
+            {
+                if (ModelState.IsValid)
 
-            if (ModelState.IsValid)
-
-                try
-                {
-                    film.critics = new List<Critics>();
-                    List<string> genres = new List<string>();
-                    
-                    foreach (string i in film.Genres[0].Split(','))
+                    try
                     {
-                        genres.Add(i);
+                        film.critics = new List<Critics>();
+                        List<string> genres = new List<string>();
 
-                    }
-                    film.Genres = genres.ToArray() ;
-                    
-
-
-                    if (Session["Username"] != null)
-                    {
-                        userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
-                        List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
-                        foreach (UserAccount u in users)
+                        foreach (string i in film.Genres[0].Split(','))
                         {
-                            if (u.Username.Equals(Session["Username"].ToString()))
+                            genres.Add(i);
+
+                        }
+                        film.Genres = genres.ToArray();
+
+
+
+                        if (Session["Username"] != null)
+                        {
+                            userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+                            List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
+                            foreach (UserAccount u in users)
                             {
+                                if (u.Username.Equals(Session["Username"].ToString()))
+                                {
 
-                                u.Films.Add(film);
+                                    u.Films.Add(film);
 
-                                var id = u.UserId.ToString();
+                                    var id = u.UserId.ToString();
 
-                                var filter = Builders<UserAccount>.Filter.Eq("_id", ObjectId.Parse(id));
-                                var update = Builders<UserAccount>.Update.Set("films", u.Films);
+                                    var filter = Builders<UserAccount>.Filter.Eq("_id", ObjectId.Parse(id));
+                                    var update = Builders<UserAccount>.Update.Set("films", u.Films);
 
-                                var result = userCollection.UpdateOne(filter, update);
+                                    var result = userCollection.UpdateOne(filter, update);
 
+                                }
                             }
                         }
+
+                        filmCollection.InsertOne(film);
+
+                        return RedirectToAction("Index");
                     }
+                    catch (Exception e)
+                    {
+                        var error = e.GetBaseException();
+                        return View();
 
-                    filmCollection.InsertOne(film);
-
-                    return RedirectToAction("Index");
-                }
-                catch (Exception e)
-                {
-                    var error = e.GetBaseException();
+                    }
+                else
                     return View();
-
-                }
-            else
+            }
                 return View();
 
 
@@ -230,41 +242,44 @@ namespace FilmAddict.Controllers
         [HttpPost]
         public ActionResult AddComment(String id)
         {
+            if (Session["Username"] != null)
+            {
+                if (ModelState.IsValid)
+                    try
+                    {
+                        Critics c = new Critics();
+                        //c.Name = Request.Form["Item2.Name"];
+                        c.Name = Session["Username"].ToString();
+                        c.Comment = Request.Form["Item2.Comment"];
 
-            if (ModelState.IsValid)
-                try
-                {
-                    Critics c = new Critics();
-                    c.Name = Request.Form["Item2.Name"];
-                    c.Comment = Request.Form["Item2.Comment"];
-
-                    var filter = Builders<FilmModel>.Filter.Eq("_id", ObjectId.Parse(id));
-                    var filmId = new ObjectId(id);
-                    Models.FilmModel film = filmCollection.AsQueryable<FilmModel>().SingleOrDefault(x => x.Id == filmId);
-                    IList<Critics> l = film.critics;
-                    l.Add(c);
-                    var update = Builders<FilmModel>.Update.Set("Critics", l);
-                    var result = filmCollection.UpdateOne(filter, update);
+                        var filter = Builders<FilmModel>.Filter.Eq("_id", ObjectId.Parse(id));
+                        var filmId = new ObjectId(id);
+                        Models.FilmModel film = filmCollection.AsQueryable<FilmModel>().SingleOrDefault(x => x.Id == filmId);
+                        IList<Critics> l = film.critics;
+                        l.Add(c);
+                        var update = Builders<FilmModel>.Update.Set("Critics", l);
+                        var result = filmCollection.UpdateOne(filter, update);
 
 
 
-                    return RedirectToAction("Display/" + id);
-                }
+                        return RedirectToAction("Display/" + id);
+                    }
 
-                catch
-                {
+                    catch
+                    {
 
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
 
-                }
-            else
-                return View();
-            
+                    }
+                else
+                    return View();
+            }
+            return View();
 
 
         }
         public ActionResult Edit(String id) {
-
+            ViewBag.logueado = Session["Username"];
             var filmId = new ObjectId(id);
             var film = filmCollection.AsQueryable().SingleOrDefault(x => x.Id == filmId);
             return View(film);
@@ -273,35 +288,44 @@ namespace FilmAddict.Controllers
         [HttpPost]
         public ActionResult Edit(String id, FilmModel film)
         {
-
-            try
+            if (Session["Username"] != null)
             {
-                var filter = Builders<FilmModel>.Filter.Eq("_id", ObjectId.Parse(id));
-                var update = Builders<FilmModel>.Update.Set("title",film.Title).Set("year",film.Year)
-                    .Set("duration",film.Duration).Set("country",film.Country)
-                    .Set("director",film.Director).Set("trailer",film.Trailer)
-                    .Set("synopsis",film.Synopsis).Set("genres",film.Genres);
+                try
+                {
+                    var filter = Builders<FilmModel>.Filter.Eq("_id", ObjectId.Parse(id));
+                    var update = Builders<FilmModel>.Update.Set("title", film.Title).Set("year", film.Year)
+                        .Set("duration", film.Duration).Set("country", film.Country)
+                        .Set("director", film.Director).Set("trailer", film.Trailer)
+                        .Set("synopsis", film.Synopsis).Set("genres", film.Genres);
 
-                var result = filmCollection.UpdateOne(filter,update);
-                return RedirectToAction("Index");
+                    var result = filmCollection.UpdateOne(filter, update);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch { 
-                return View();
-            }
+            return View();
 
         }
 
         public ActionResult Delete(String id) {
-
-
-            try
+            if (Session["Username"] != null)
             {
-                filmCollection.DeleteOne(Builders<FilmModel>.Filter.Eq("_id",ObjectId.Parse(id)));
-                return RedirectToAction("Index");
+
+                try
+                {
+                    
+                    filmCollection.DeleteOne(Builders<FilmModel>.Filter.Eq("_id", ObjectId.Parse(id)));
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch {
                 return View();
-            }
         }
 
 

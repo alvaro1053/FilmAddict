@@ -71,17 +71,22 @@
                 </td>
 
                 <td>
-
-                    <button class="w3-button w3-white w3-border w3-round-large">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                    </button>
+                    @if (ViewBag.logueado != null)
+                    {
+                        <button class="w3-button w3-white w3-border w3-round-large">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                        </button>
+                    }
                     <button class="w3-button w3-white w3-border w3-round-large">
                         @Html.ActionLink("Display", "Display", new { id = item.Id })
                     </button>
-                    <button class="w3-btn w3-white w3-border w3-border-red w3-round-large">
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </button>
-                </td>
+                    @if (ViewBag.logueado != null)
+                    {
+                        <button class="w3-btn w3-white w3-border w3-border-red w3-round-large">
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </button>
+                    }
+                    </td>
             </tr>
         }
 

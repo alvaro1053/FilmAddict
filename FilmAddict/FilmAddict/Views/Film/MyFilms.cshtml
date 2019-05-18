@@ -1,77 +1,79 @@
 ﻿@model IEnumerable<FilmAddict.Models.FilmModel>
 
+@if (ViewBag.logueado != null)
+{
+<br />
 
-    <br />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .w3-btn {
+        margin-bottom: 10px;
+    }
+</style>
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <style>
-        .w3-btn {
-            margin-bottom: 10px;
-        }
-    </style>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Director)
+        </th>
+        <!--
+        <th>
+            @Html.DisplayNameFor(model => model.Trailer)
+        </th>
+        -->
+        <th>
+            @Html.DisplayNameFor(model => model.Synopsis)
+        </th>
 
-    <table class="table">
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Country)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Director)
-            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Director)
+            </td>
             <!--
-            <th>
-                @Html.DisplayNameFor(model => model.Trailer)
-            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trailer)
+            </td>
             -->
-            <th>
-                @Html.DisplayNameFor(model => model.Synopsis)
-            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Synopsis)
+            </td>
 
 
-
-            <th></th>
         </tr>
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Year)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Country)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Director)
-                </td>
-                <!--
-                <td>
-                    @Html.DisplayFor(modelItem => item.Trailer)
-                </td>
-                -->
-                <td>
-                    @Html.DisplayFor(modelItem => item.Synopsis)
-                </td>
+</table>
 
 
-            </tr>
-        }
-
-    </table>
-
-   
+}

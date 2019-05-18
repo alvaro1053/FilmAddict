@@ -58,10 +58,16 @@ namespace FilmAddict.Controllers
                 }
                 if (check == true)
                 {
+                    if (account.Films==null) {
+
+                        account.Films = films;
+                    }
+
                     userCollection.InsertOne(account);
 
                     ModelState.Clear();
                     ViewBag.Message = account.Username + " succesfully registered.";
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View();
@@ -88,7 +94,8 @@ namespace FilmAddict.Controllers
                 {
                     Session["UserID"] = user.UserId.ToString();
                     Session["Username"] = user.Username.ToString();
-                    return RedirectToAction("LoggedIn");
+                    //return RedirectToAction("LoggedIn");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

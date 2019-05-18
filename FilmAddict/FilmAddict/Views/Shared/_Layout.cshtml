@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -24,32 +24,32 @@
                     <li>@Html.ActionLink("Films", "Index", "Film")</li>
                     <li>@Html.ActionLink("Stats", "Index", "Film/Stats")</li>
                     <li>@Html.ActionLink("Billboards", "Index", "Billboard")</li>
-
                     @if (Session["UserId"] != null)
                     {
                         <li>@Html.ActionLink("My Films", "MyFilms", "Film/MyFilms")</li>
                     }
 
-                    @if (Session["UserId"] == null){
-                    <li>@Html.ActionLink("Log in", "Index", "Account/Login")</li>
-                    <li>@Html.ActionLink("Register", "Index", "Account/Register")</li>
+                    @if (Session["UserId"] == null)
+                    {
+                        <li>@Html.ActionLink("Log in", "Index", "Account/Login")</li>
+                        <li>@Html.ActionLink("Register", "Index", "Account/Register")</li>
                     }
-
-
-                    @if (Session["UserId"] != null)
-    {
-                <li>@Html.ActionLink("Log out", "Index", "Account/Logout")</li>
-}
-
-                    @if (Session["UserId"] != null)
-    {
-                <li><h5 style="color:white;">Logged as:</h5><h4 style="text-align : center;color:white;border: 1px solid powderblue;">  @Session["Username"].ToString()</h4></li>
-}
-
-
-
-
                 </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (Session["UserId"] != null)
+                        {
+                            <li>@Html.ActionLink("Log out", "Index", "Account/Logout")</li>
+                        }
+
+                        @if (Session["UserId"] != null)
+                        {
+                            <li><h5 style="color:white;">Logged as:</h5><h4 style="text-align : center;color:white;border: 1px solid powderblue;">  @Session["Username"].ToString()</h4></li>
+                        }
+
+                    </ul>
+
+
+                
             </div>
         </div>
     </div>

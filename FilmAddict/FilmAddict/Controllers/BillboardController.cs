@@ -29,7 +29,7 @@ namespace FilmAddict.Controllers
         // GET: Billboard
         public ActionResult Index()
         {
-
+            ViewBag.logueado = Session["Username"];
             List<Billboard> billboards = billboardCollection.AsQueryable<Billboard>().ToList();
 
             return View(billboards);
@@ -40,21 +40,37 @@ namespace FilmAddict.Controllers
         {
             var billboardId = new ObjectId(id);
             List<FilmModel> films = new List<FilmModel>();
+            List<FilmModel> filmsResultantes = new List<FilmModel>();
             var billboard = billboardCollection.AsQueryable<Billboard>().SingleOrDefault(x => x.Id == billboardId);
-            
+           
             foreach(string i in billboard.films) {
                 var film = filmCollection.AsQueryable().ToList().SingleOrDefault(x => x.Id == new ObjectId(i));
-                films.Add(film);
+                if (film!=null) {
+                    films.Add(film);
+                }
             }
 
             ViewBag.films = films;
-            ViewBag.allFilms = filmCollection.AsQueryable().ToList();
+            
+            foreach (FilmModel i in filmCollection.AsQueryable().ToList())
+            {
+                if (!billboard.films.Contains(i.Id.ToString())) {
+                    filmsResultantes.Add(i);
+                }
+            }
+
+            ViewBag.logueado = Session["Username"];
+            
+
+                ViewBag.allFilms = filmsResultantes;
+
             return View(billboard);
         }
 
         // GET: Billboard/Create
         public ActionResult Create()
         {
+            ViewBag.logueado = Session["Username"];
             return View();
         }
 
@@ -62,25 +78,31 @@ namespace FilmAddict.Controllers
         [HttpPost]
         public ActionResult Create(Billboard b)
         {
-            if (ModelState.IsValid)
-                try
-                {
-                    // TODO: Add insert logic here
-                    b.films = new List<string>();
-                    billboardCollection.InsertOne(b);
-                    return RedirectToAction("Index");
-                }
-                catch
-                {
+            if (Session["Username"] != null)
+            {
+                ViewBag.logueado = Session["Username"];
+                if (ModelState.IsValid)
+                    try
+                    {
+                        // TODO: Add insert logic here
+                        b.films = new List<string>();
+                        billboardCollection.InsertOne(b);
+                        return RedirectToAction("Index");
+                    }
+                    catch
+                    {
+                        return View();
+                    }
+                else
                     return View();
-                }
-            else
-                return View();
+            }
+            return View();
         }
 
         // GET: Billboard/Edit/5
         public ActionResult Edit(String id)
         {
+            ViewBag.logueado = Session["Username"];
             var billboardId = new ObjectId(id);
             var billboard = billboardCollection.AsQueryable<Billboard>().SingleOrDefault(x => x.Id == billboardId);
 
@@ -91,95 +113,93 @@ namespace FilmAddict.Controllers
         [HttpPost]
         public ActionResult Edit(String id, Billboard b)
         {
-            try
+            if (Session["Username"] != null)
             {
-                // TODO: Add update logic here
-                var filter = Builders<Billboard>.Filter.Eq("_id", ObjectId.Parse(id));
-                var update = Builders<Billboard>.Update.Set("name", b.Name).Set("location", b.Location)
-                    .Set("price", b.Price);
+                ViewBag.logueado = Session["Username"];
+                try
+                {
+                    // TODO: Add update logic here
+                    var filter = Builders<Billboard>.Filter.Eq("_id", ObjectId.Parse(id));
+                    var update = Builders<Billboard>.Update.Set("name", b.Name).Set("location", b.Location)
+                        .Set("price", b.Price);
 
 
-                var result = billboardCollection.UpdateOne(filter, update);
-                return RedirectToAction("Index");
+                    var result = billboardCollection.UpdateOne(filter, update);
+                    return RedirectToAction("Index");
 
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: Billboard/Delete/5
         public ActionResult Delete(String id)
         {
-            try
+            if (Session["Username"] != null)
             {
-                billboardCollection.DeleteOne(Builders<Billboard>.Filter.Eq("_id", ObjectId.Parse(id)));
-                return RedirectToAction("Index");
+                ViewBag.logueado = Session["Username"];
+                try
+                {
+                    billboardCollection.DeleteOne(Builders<Billboard>.Filter.Eq("_id", ObjectId.Parse(id)));
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         //Add Film
         [HttpPost]
-        public ActionResult AddFilm(String id)//List<String>¿?
+        public ActionResult AddFilm(String id)
         {
-
-            if (ModelState.IsValid)
-                try
-                {
-                    var idFilm= Request.Form["select"];//id de la pelicula q quiero añadir
-
-                    
-
-                    var filter = Builders<Billboard>.Filter.Eq("_id", ObjectId.Parse(id));//cojo el billboard actual
-                    var bId = new ObjectId(id);
-                    var b = billboardCollection.AsQueryable<Billboard>().SingleOrDefault(x => x.Id == bId);
-                    IList<string> l = b.films;
-                    //Le voy a añadir a la lista de films solo las ids, si no puedo obtener los valores de sus atributos ->meto el objeto film para tener los atributos-> con la id 
-                    //en el display busco por esa id y muetro el objeto.
-
-                    foreach (string i in idFilm.Split(','))
+            ViewBag.logueado = Session["Username"];
+            if (Session["Username"] != null)
+            {
+                if (ModelState.IsValid)
+                    try
                     {
-                        l.Add(i);
+                        var idFilm = Request.Form["select"];//id de la pelicula q quiero añadir
+
+
+
+                        var filter = Builders<Billboard>.Filter.Eq("_id", ObjectId.Parse(id));//cojo el billboard actual
+                        var bId = new ObjectId(id);
+                        var b = billboardCollection.AsQueryable<Billboard>().SingleOrDefault(x => x.Id == bId);
+                        IList<string> l = b.films;
+
+
+                        foreach (string i in idFilm.Split(','))
+                        {
+                            l.Add(i);
+                        }
+
+
+                        var update = Builders<Billboard>.Update.Set("films", l);
+                        var result = billboardCollection.UpdateOne(filter, update);
+
+                        return RedirectToAction("Display/" + id);
                     }
 
-                    
-                    var update = Builders<Billboard>.Update.Set("films", l);
-                    var result = billboardCollection.UpdateOne(filter, update);
+                    catch
+                    {
 
-                    return RedirectToAction("Display/" + id);
-                }
+                        return RedirectToAction("Index");
 
-                catch
-                {
+                    }
+                else
+                    return View();
 
-                    return RedirectToAction("Index");
-
-                }
-            else
-                return View();
-
+            }
+            return View();
         }
+     
 
-        /*     // POST: Billboard/Delete/5
-             [HttpPost]
-             public ActionResult Delete(int id, FormCollection collection)
-             {
-                 try
-                 {
-                     // TODO: Add delete logic here
-
-                     return RedirectToAction("Index");
-                 }
-                 catch
-                 {
-                     return View();
-                 }
-             }
-         }*/
     }
 }

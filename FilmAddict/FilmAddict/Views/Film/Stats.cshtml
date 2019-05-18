@@ -15,15 +15,24 @@
             </tr>
             <tr>
                 <td>Film more popular:</td>
-                <td style="text-align: right"><a href="Display/@ViewBag.filmMoreComments.Id"> @ViewBag.filmMoreComments.Title  </a>  <span class="badge badge-danger"> @ViewBag.numberComments comments</span></td>
-            </tr>
+                @if (ViewBag.filmMoreComments != null)
+                {
+                    <td style="text-align: right"><a href="Display/@ViewBag.filmMoreComments.Id"> @ViewBag.filmMoreComments.Title  </a>  <span class="badge badge-danger"> @ViewBag.numberComments comments</span></td>
+                }
+                </tr>
             <tr>
                 <td>Longer duration film</td>
-                <td style="text-align: right"><a href="Display/@ViewBag.filmMoreDuration.Id"> @ViewBag.filmMoreDuration.Title </a> <span class="badge badge-danger"> @ViewBag.bestDuration minutes</span> </td>
+                @if (ViewBag.filmMoreDuration != null)
+                {
+                    <td style="text-align: right"><a href="Display/@ViewBag.filmMoreDuration.Id"> @ViewBag.filmMoreDuration.Title </a> <span class="badge badge-danger"> @ViewBag.bestDuration minutes</span> </td>
+                }
             </tr>
             <tr>
                 <td>Shorter duration film</td>
-                <td style="text-align: right"><a href="Display/@ViewBag.filmLessDuration.Id"> @ViewBag.filmLessDuration.Title </a> <span class="badge badge-danger"> @ViewBag.worstDuration minutes</span> </td>
+                @if (ViewBag.filmLessDuration != null)
+                {
+                    <td style="text-align: right"><a href="Display/@ViewBag.filmLessDuration.Id"> @ViewBag.filmLessDuration.Title </a> <span class="badge badge-danger"> @ViewBag.worstDuration minutes</span> </td>
+                }
             </tr>
             @*
                 <!--<tr>

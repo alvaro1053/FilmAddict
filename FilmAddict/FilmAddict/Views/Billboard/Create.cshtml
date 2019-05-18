@@ -1,17 +1,15 @@
 ﻿@model FilmAddict.Models.Billboard
 
-@{
-    ViewBag.Title = "Create";
-}
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
+  
+@using (Html.BeginForm())
 {
+    if (ViewBag.logueado != null)
+    {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Billboard</h4>
+        <h4 style="text-align:center">Billboard</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -49,3 +47,4 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+}

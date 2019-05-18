@@ -9,8 +9,10 @@
 
 @using (Html.BeginForm())
 {
+    if (ViewBag.logueado != null)
+    {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>FilmModel</h4>
     <hr />
@@ -89,8 +91,8 @@
         </div>
     </div>
 </div>
+    }
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

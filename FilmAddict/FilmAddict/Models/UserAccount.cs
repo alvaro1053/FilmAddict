@@ -35,5 +35,9 @@ namespace FilmAddict.Models
         [BsonElement("films")]
         public List <FilmModel> Films { get; set; }
 
+        [Display(Name = "You assume that you will make responsible and ethical use of our application.")]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You gotta tick the box!")]
+        public bool TermsAndConditions { get; set; }
+
     }
 }
