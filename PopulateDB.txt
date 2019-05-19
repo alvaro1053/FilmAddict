@@ -1,3 +1,40 @@
+Billboard:
+
+{
+    "_id" : ObjectId("5cdf0b57538e6b42425fe19d"),
+    "name" : "Nervi—n Plaza",
+    "location" : "sevilla",
+    "price" : 8.0,
+    "films" : [ 
+        "5cdc68ea538e6b3593524763"
+    ]
+}
+
+{
+    "_id" : ObjectId("5ce14b50538e6b563feaf3e8"),
+    "name" : "Alameda de HŽrcules",
+    "location" : "Sevilla",
+    "price" : 5.0,
+    "films" : [ 
+        "5ce13327538e6b530a076648"
+    ]
+}
+
+{
+    "_id" : ObjectId("5ce18311538e6b563feaf3eb"),
+    "name" : "Cervantes",
+    "location" : "Sevilla",
+    "price" : 5.0,
+    "films" : [ 
+        "5ca8d5af1225f88b87944b71", 
+        "5ca8de381225f88b87984cf2", 
+        "5ca8de8d1225f88b87984d0c"
+    ]
+}
+
+--------------------
+
+Film:
 
 {
     "_id" : ObjectId("5ca8d5af1225f88b87944b71"),
@@ -7,7 +44,7 @@
     "country" : "Estados Unidos",
     "director" : "Tim Burton",
     "trailer" : "https://www.youtube.com/embed/7NiYVoqBt-8",
-    "synopsis" : "Holt Farrier (Colin Farrell) cuenta con la ayuda de sus hijos Milly (Nico Parker) y Joe (Finley Hobbins) para cuidar a un elefante recién nacido cuyas orejas gigantes le hacer ser el hazmerreír en un Circo que no pasa por su mejor momento.",
+    "synopsis" : "Holt Farrier (Colin Farrell) cuenta con la ayuda de sus hijos Milly (Nico Parker) y Joe (Finley Hobbins) para cuidar a un elefante reciŽn nacido cuyas orejas gigantes le hacer ser el hazmerreir en un Circo que no pasa por su mejor momento.",
     "genres" : [ 
         "Aventuras", 
         "Cine familiar"
@@ -16,19 +53,24 @@
         {
             "name" : "Luis Belmonte",
             "comment" : "Burton hace un trabajo solvente, aunque sin sorpresas..."
+        }, 
+        {
+            "name" : "alvaro1053",
+            "comment" : "Muy entretenida. Recomendable."
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("5ca8de381225f88b87984cf2"),
     "title" : "REC",
     "year" : "2007",
     "duration" : "76",
-    "country" : "España",
-    "director" : "Jaume Balagueró",
+    "country" : "Espa–a",
+    "director" : "Jaume Balaguerœ",
     "trailer" : "https://www.youtube.com/embed/tqsOaV7NUVM",
-    "synopsis" : "Cada noche, Ángela (Manuela Velasco), una joven reportera de una televisión local, sigue con su cámara a un grupo profesional distinto. Esta noche le toca entrevistar a los bomberos y tiene la secreta esperanza de poder asistir en directo a un impactante incendio. Pero la noche transcurre tranquilamente.",
+    "synopsis" : "Cada noche, çngela (Manuela Velasco), una joven reportera de una televisi—n local, sigue con su c‡mara a un grupo profesional distinto. Esta noche le toca entrevistar a los bomberos y tiene la secreta esperanza de poder asistir en directo a un impactante incendio. Pero la noche transcurre tranquilamente.",
     "genres" : [ 
         "Terror", 
         "Zombis"
@@ -36,10 +78,12 @@
     "Critics" : [ 
         {
             "name" : "Carlos Boyero",
-            "comment" : "Lo que más me atrae de REC es su original planteamiento, la sensación de veracidad que desprende esa falsa telerrealidad, la mordaz descripción de los vecinos."
+            "comment" : "Lo que m‡s me atrae de REC es su original planteamiento, la sensaci—n de veracidad que desprende esa falsa telerrealidad, la mordaz descripci—n de los vecinos."
         }
     ]
 }
+
+
 {
     "_id" : ObjectId("5ca8de8d1225f88b87984d0c"),
     "title" : "Glass",
@@ -48,7 +92,7 @@
     "country" : "Estados Unidos",
     "director" : "M. Night Shyamalan",
     "trailer" : "https://www.youtube.com/embed/95ghQs5AmNk",
-    "synopsis" : "Secuela de El protegido y Múltiple.",
+    "synopsis" : "Secuela de El protegido y Mœltiple.",
     "genres" : [ 
         "Intriga", 
         "Thriller"
@@ -56,11 +100,66 @@
     "Critics" : [ 
         {
             "name" : "Jordi Costa",
-            "comment" : "Es un película tan inteligente, pausada, derivativa, juguetona y consciente de sí misma que no queda otra que rendirse."
+            "comment" : "Es un pel’cula tan inteligente, pausada, derivativa, juguetona y consciente de s’ misma que no queda otra que rendirse."
         }, 
         {
             "name" : "Carlos Costa",
             "comment" : "Impresionante"
         }
     ]
+}
+
+
+-----------------
+
+User:
+
+{
+    "_id" : ObjectId("5ce125c1538e6b530a076647"),
+    "username" : "alvaro1053",
+    "password" : "alvaro",
+    "confirmPassword" : "alvaro",
+    "films" : [ 
+        {
+            "_id" : ObjectId("000000000000000000000000"),
+            "title" : "Vengadores: Endgame",
+            "year" : 2019,
+            "duration" : 181,
+            "country" : "Estados Unidos",
+            "director" : "Anthony Russo",
+            "trailer" : "https://www.youtube.com/embed/UQ3bqYKnyhM",
+            "synopsis" : "DespuŽs de los eventos devastadores de 'Avengers: Infinity War', el universo est‡ en ruinas debido a las acciones de Thanos, el Tit‡n Loco.",
+            "genres" : [ 
+                "Ciencia ficci—n"
+            ],
+            "Critics" : []
+        }
+    ],
+    "TermsAndConditions" : true
+}
+
+
+{
+    "_id" : ObjectId("5ce1791a538e6b563feaf3e9"),
+    "username" : "alvaro1234",
+    "password" : "alvaro1234",
+    "confirmPassword" : "alvaro1234",
+    "films" : [ 
+        {
+            "_id" : ObjectId("000000000000000000000000"),
+            "title" : "Lo dejo cuando quiera",
+            "year" : 2019,
+            "duration" : 98,
+            "country" : "Espa–a",
+            "director" : "Carlos Ther—n",
+            "trailer" : "https://www.youtube.com/embed/Py3JDqMl-84",
+            "synopsis" : "Amigos desde la facultad y sobradamente preparados, Pedro, Arturo y Eligio son tres profesores universitarios a los que la crisis ha dejado sin trabajo. ",
+            "genres" : [ 
+                "Comedia ", 
+                " Drogas"
+            ],
+            "Critics" : []
+        }
+    ],
+    "TermsAndConditions" : true
 }
