@@ -170,12 +170,22 @@ namespace FilmAddict.Controllers
             ViewBag.billboardWithMoreFilms = billboardWithMoreFilms;
 
             //Usuario con mas pelis creadas
-           /* userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+            userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+            List<UserAccount> users = new List<UserAccount>();
+            ViewBag.sinUsuarios = userCollection.AsQueryable().ToList().Count();
+            if (userCollection.AsQueryable().ToList().Count() > 0) {
+                var n = userCollection.AsQueryable<UserAccount>().Max(x => x.Films.Count);
+            
+            foreach (var i in userCollection.AsQueryable().ToList()) {
 
-            var user = userCollection.AsQueryable<UserAccount>().Select(x=> new {x.Username , x.Films}).OrderBy(a=>a.Films).First();
+                if (n==i.Films.Count) {
+                    users.Add(i);
+                }
 
-            ViewBag.usuarioMasActivo = user.Username;
-            ViewBag.usuarioMasActivoPelis = user.Films;*/
+            }
+            
+            ViewBag.usuarioMasActivo = users.First();
+            }
 
             return View();
 

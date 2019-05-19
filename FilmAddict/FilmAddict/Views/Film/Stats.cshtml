@@ -34,6 +34,7 @@
                     <td style="text-align: right"><a href="Display/@ViewBag.filmLessDuration.Id"> @ViewBag.filmLessDuration.Title </a> <span class="badge badge-danger"> @ViewBag.worstDuration minutes</span> </td>
                 }
             </tr>
+            
         
         </table>
     </div>
@@ -60,9 +61,29 @@
                 }
 
             </tr>
+            
 
         </table>
-        </div>
+        @if (ViewBag.sinUsuarios > 0)
+        {
+        <table class="displayStyle" style="width: 50%">
+            <tr>
+                <th colspan="2">
+                    Users
+                </th>
+            </tr>
+            <tr>
+                <td>
+
+                    Most active user of the system: @ViewBag.usuarioMasActivo.Username with @ViewBag.usuarioMasActivo.Films.Count films created
+
+                </td>
+
+            </tr>
+
+            </table>
+        }
+</div>
     </div>
     <div class="displayStyle" style="width: 50%">
         <canvas id="myChart" width="50" height="50"></canvas>
