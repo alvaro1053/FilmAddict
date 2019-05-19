@@ -37,7 +37,9 @@
 
     </dl>
 </div>
-
+@if (films.Count >0) {
+<strong>Films</strong>
+}
 @foreach (var item in films)
 {
     <div class="col-lg-pull-10">
@@ -46,9 +48,9 @@
             <li>
                 <a href="../../Film/Display/@item.Id">
                     @item.Title
-                    </a>
-                                
-</li>
+                </a>
+
+            </li>
 
         </ul>
 
@@ -62,24 +64,24 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    if (ViewBag.logueado !=null)
+    if (ViewBag.logueado != null)
     {
         if (allFilmsSystem.Count != 0)
         {
-            <select class="bootstrap-select" id="select" multiple="multiple" name="select" data-live-search="true">
+            <select class="form-control" id="select" multiple="multiple" name="select" data-live-search="true">
                 @foreach (var item in allFilmsSystem)
                 {
 
                     <option value="@item.Id">@item.Title</option>
                 }
             </select>
-
-            <input type="submit" value="Save" class="btn-danger" />
+            <br />
+            <input type="submit" value="Save" class="btn btn-primary" />
 
         }
     }
 }
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+
     @Html.ActionLink("Back to List", "Index")
 </p>

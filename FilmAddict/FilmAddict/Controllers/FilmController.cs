@@ -62,6 +62,7 @@ namespace FilmAddict.Controllers
             ViewBag.logueado = Session["Username"];
             ViewBag.Comments = film.critics;
             ViewBag.Genres = film.Genres;
+            ViewBag.trailer = film.Trailer;
             ViewBag.film = film;
             var tuple = new Tuple<FilmAddict.Models.FilmModel, FilmAddict.Models.Critics>(film,new Critics());
 
@@ -168,6 +169,13 @@ namespace FilmAddict.Controllers
             var billboardWithMoreFilms = billboardCollection.AsQueryable().ToList().OrderByDescending(x => x.films.Count).Take(3);
             ViewBag.billboardWithMoreFilms = billboardWithMoreFilms;
 
+            //Usuario con mas pelis creadas
+           /* userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
+
+            var user = userCollection.AsQueryable<UserAccount>().Select(x=> new {x.Username , x.Films}).OrderBy(a=>a.Films).First();
+
+            ViewBag.usuarioMasActivo = user.Username;
+            ViewBag.usuarioMasActivoPelis = user.Films;*/
 
             return View();
 
@@ -248,7 +256,7 @@ namespace FilmAddict.Controllers
                     try
                     {
                         Critics c = new Critics();
-                        //c.Name = Request.Form["Item2.Name"];
+                  
                         c.Name = Session["Username"].ToString();
                         c.Comment = Request.Form["Item2.Comment"];
 
@@ -296,7 +304,7 @@ namespace FilmAddict.Controllers
                     var update = Builders<FilmModel>.Update.Set("title", film.Title).Set("year", film.Year)
                         .Set("duration", film.Duration).Set("country", film.Country)
                         .Set("director", film.Director).Set("trailer", film.Trailer)
-                        .Set("synopsis", film.Synopsis).Set("genres", film.Genres);
+                        .Set("synopsis", film.Synopsis).Set("genres", film.Genres[0].Split(','));
 
                     var result = filmCollection.UpdateOne(filter, update);
                     return RedirectToAction("Index");

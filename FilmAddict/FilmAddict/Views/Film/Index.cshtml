@@ -5,12 +5,7 @@
     }
     <br />
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <style>
-        .w3-btn {
-            margin-bottom: 10px;
-        }
-    </style>
+ 
 
     <table class="table">
         <tr>
@@ -53,7 +48,7 @@
                     @Html.DisplayFor(modelItem => item.Year)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
+                    @Html.DisplayFor(modelItem => item.Duration) minutes
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Country)
@@ -61,11 +56,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Director)
                 </td>
-                <!--
-                <td>
-                    @Html.DisplayFor(modelItem => item.Trailer)
-                </td>
-                -->
+               
                 <td>
                     @Html.DisplayFor(modelItem => item.Synopsis)
                 </td>
@@ -73,27 +64,34 @@
                 <td>
                     @if (ViewBag.logueado != null)
                     {
-                        <button class="w3-button w3-white w3-border w3-round-large">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                        </button>
+                        <input class="btn btn-success" style="text-align:center" type="button"
+                               value="Edit"
+                               onclick='location.href="@Url.Action("Edit","Film",new { id = item.Id })"' />
                     }
-                    <button class="w3-button w3-white w3-border w3-round-large">
-                        @Html.ActionLink("Display", "Display", new { id = item.Id })
-                    </button>
+                    <input class="btn btn-info" style="text-align:center" type="button"
+                           value="Display"
+                           onclick='location.href="@Url.Action("Display","Film",new { id = item.Id })"' />
                     @if (ViewBag.logueado != null)
                     {
-                        <button class="w3-btn w3-white w3-border w3-border-red w3-round-large">
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                        </button>
+                        <input class="btn btn-danger" style="text-align:center" type="button"
+                               value="Delete"
+                               onclick='location.href="@Url.Action("Delete","Film",new { id = item.Id })"' />
                     }
-                    </td>
+                </td>
             </tr>
         }
 
     </table>
 
     <div style="text-align: center;">
-        <button class="w3-button w3-white w3-border w3-round-large">
-            @Html.ActionLink("Create New", "Create")
-        </button>
+        @if (ViewBag.logueado != null)
+        {
+
+            <input class="btn btn-primary" style="text-align:center" type="button"
+                   value="Create"
+                   onclick='location.href="@Url.Action("Create","Film")"' />
+
+
+
+        }
     </div>

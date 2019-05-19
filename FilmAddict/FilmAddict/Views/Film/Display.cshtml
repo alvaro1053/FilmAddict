@@ -6,12 +6,6 @@
     var film = ViewBag.film;
 }
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-    .w3-btn {
-        margin-bottom: 10px;
-    }
-</style>
 
 <div>
 
@@ -38,7 +32,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(tuple => tuple.Item1.Duration)
+            @Html.DisplayFor(tuple => tuple.Item1.Duration) minutes
         </dd>
 
         <dt>
@@ -56,17 +50,19 @@
         <dd>
             @Html.DisplayFor(tuple => tuple.Item1.Director)
         </dd>
+        @if (ViewBag.trailer != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(tuple => tuple.Item1.Trailer)
+            </dt>
+            <br />
+            <dd>
 
-        <dt>
-            @Html.DisplayNameFor(tuple => tuple.Item1.Trailer)
-        </dt>
-        <br />
-        <dd>
+                <iframe style="border:2px solid red;" width="560" height="315" src="@Html.DisplayFor(tuple => tuple.Item1.Trailer)"
+                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            <iframe style="border:2px solid red;" width="560" height="315" src="@Html.DisplayFor(tuple => tuple.Item1.Trailer)"
-                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-        </dd>
+            </dd>
+        }
         <br />
         <dt>
             @Html.DisplayNameFor(tuple => tuple.Item1.Synopsis)
@@ -75,18 +71,20 @@
         <dd>
             @Html.DisplayFor(tuple => tuple.Item1.Synopsis)
         </dd>
+        @if (genres.Length != 0)
+        {
+            <dt>
+                @Html.DisplayNameFor(tuple => tuple.Item1.Genres)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(tuple => tuple.Item1.Genres)
-        </dt>
-
-        <dd>
-            @foreach (var item in genres)
-            {
-                <span class="badge badge-danger">@item</span>
-            }
-        </dd>
-        <br />
+            <dd>
+                @foreach (var item in genres)
+                {
+                    <span class="badge badge-danger">@item</span>
+                }
+            </dd>
+            <br />
+        }
         @foreach (var item in comments)
         {
 
@@ -109,11 +107,11 @@
 @if (ViewBag.logueado != null)
 {
 
-<div style="text-align: center;">
-    <button type="button" style="margin: 0 auto;" class="w3-button w3-white w3-border w3-round-large" data-toggle="modal" data-target="#exampleModal">
-        Add comment
-    </button>
-</div>
+    <div style="text-align: center;">
+        <button type="button" style="margin: 0 auto;" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Add comment
+        </button>
+    </div>
 }
 @using (Html.BeginForm("AddComment", "Film", new { id = Model.Item1.Id }, FormMethod.Post))
 {
@@ -129,11 +127,11 @@
 
                 </div>
                 <div class="modal-body">
-                  
+
                     <div class="form-group">
                         @Html.LabelFor(tuple => tuple.Item2.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
 
-                        @Html.EditorFor(tuple => tuple.Item2.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(tuple => tuple.Item2.Comment, new { htmlAttributes = new { @class = "form-control input-lg" } })
 
                         @Html.ValidationMessageFor(tuple => tuple.Item2.Comment, "", new { @class = "text-danger" })
 
@@ -143,7 +141,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" value="Save" class="btn btn-danger" />
+                    <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </div>
         </div>

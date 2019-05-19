@@ -1,13 +1,6 @@
 ﻿@model IEnumerable<FilmAddict.Models.Billboard>
 
-@if (ViewBag.logueado != null)
-{
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-
-}
+<div class="container">
     <table class="table">
         <tr>
             <th>
@@ -37,16 +30,38 @@
                 <td>
                     @if (ViewBag.logueado != null)
                     {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                    }|
-                    @Html.ActionLink("Display", "Display", new { id = item.Id }) |
+
+                        <input class="btn btn-success" style="text-align:center" type="button"
+                               value="Edit"
+                               onclick='location.href="@Url.Action("Edit","Billboard",new { id = item.Id })"' />
+
+                    }
+                    <input class="btn btn-info" style="text-align:center" type="button"
+                           value="Display"
+                           onclick='location.href="@Url.Action("Display","Billboard",new { id = item.Id })"' />
+                    
                     @if (ViewBag.logueado != null)
                     {
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    <input class="btn btn-danger" style="text-align:center" type="button"
+                           value="Delete"
+                           onclick='location.href="@Url.Action("Delete","Billboard",new { id = item.Id })"' />
                     }
 
-                    </td>
+                </td>
             </tr>
         }
 
     </table>
+</div>
+<div style="text-align:center">
+    @if (ViewBag.logueado != null)
+    {
+        
+        <input class="btn btn-primary" style="text-align:center" type="button"
+               value="Create"
+               onclick='location.href="@Url.Action("Create","Billboard")"' />
+
+        
+
+        }
+    </div>

@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FilmAddict->@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+  
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -29,11 +30,7 @@
                         <li>@Html.ActionLink("My Films", "MyFilms", "Film/MyFilms")</li>
                     }
 
-                    @if (Session["UserId"] == null)
-                    {
-                        <li>@Html.ActionLink("Log in", "Index", "Account/Login")</li>
-                        <li>@Html.ActionLink("Register", "Index", "Account/Register")</li>
-                    }
+                   
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
@@ -50,7 +47,7 @@
 
                     @if (Session["UserId"] != null)
     {
-                <li><h5 style="color:white;">Logged as:</h5><h4 style="text-align : center;color:white;border: 1px solid powderblue;">  @Session["Username"].ToString()</h4></li>
+                <li><h5 style="color:white;text-align : center;color:white;border: 1px solid powderblue;">Logged as:  @Session["Username"].ToString()</h5></li>
 }
 
                 </ul>
