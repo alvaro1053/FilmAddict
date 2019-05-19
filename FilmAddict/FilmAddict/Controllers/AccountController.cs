@@ -94,12 +94,12 @@ namespace FilmAddict.Controllers
                 {
                     Session["UserID"] = user.UserId.ToString();
                     Session["Username"] = user.Username.ToString();
-                    //return RedirectToAction("LoggedIn");
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    //ModelState.AddModelError("", "Username or password is wrong.");
+                   
                     ViewBag.Fail = "Username or password is wrong.";
                 }
 
@@ -125,53 +125,7 @@ namespace FilmAddict.Controllers
             return RedirectToAction("LoggedIn");
         }
 
-        /*       
-        public JsonResult checkUsernameAvailability(string UserName)
-        {
-            dbcontext = new MongoDBContext();
-            userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
-
-            List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
-
-            var searchData = users.Where(u => u.Username == UserName).SingleOrDefault();
-
-            if(searchData != null)
-            {
-                return Json(1);
-            }
-            else
-            {
-                return Json(0);
-            }
-
-
-
-            
-            dbcontext = new MongoDBContext();
-            userCollection = dbcontext.mongoDatabase.GetCollection<UserAccount>("User");
-
-            List<UserAccount> users = userCollection.AsQueryable<UserAccount>().ToList();
-
-            bool existsUser = users.Where(u => u.Username.ToLowerInvariant().Equals(UserName.ToLower())) != null;
-
-            return Json(!existsUser, JsonRequestBehavior.AllowGet);
-
-            string y = null;
-            var user = y;
-
-            foreach (UserAccount u in users)
-            {
-                if (!(u.Username.Equals(UserName)))
-                { 
-                    user = UserName;
-                }
-            }
-
-            return Json(user == null);
-
-
-        }
-        */
+      
 
     }
 }

@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 } 
 
-<h2>Create</h2>
+<h2 style="text-align:center">Create</h2>
 
 @Html.ValidationSummary()
 @using (Html.BeginForm())
@@ -60,7 +60,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Trailer, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Trailer, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Trailer, new { htmlAttributes = new { @class = "form-control", placeholder = "https://www.youtube.com/embed/EIyZqNbZQI8"} })
             @Html.ValidationMessageFor(model => model.Trailer, "", new { @class = "text-danger" })
         </div>
     </div>

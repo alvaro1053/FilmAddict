@@ -28,6 +28,6 @@ namespace FilmAddict.Models
         [BsonElement("films")]
         public IList<string> films { get; set; }
 
-        //Lo paso a String , pero si quiero añadir film object lo paso a filmModel
+        
     }
 }
